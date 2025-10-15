@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "758606237045",
+    "project_id": "furniwasfirebase",
+    "storage_bucket": "furniwasfirebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758606237045:android:6555cd07ed5719cc41973c",
+        "android_client_info": {
+          "package_name": "com.example.basics"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANJ7ymenSkTCAFuEDViAFmcbsurl7oMWw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
