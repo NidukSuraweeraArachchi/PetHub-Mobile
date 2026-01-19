@@ -1,0 +1,1 @@
+Project updated: January 2026 - Version 2 fixes
