@@ -11,12 +11,12 @@ class UpiPaymentScreen extends StatefulWidget {
   final String packagePrice;
   final String packageDetails;
 
-  const UpiPaymentScreen({
+  const UpiPaymentScreen({Key? key, 
     required this.order,
     required this.packageName,
     required this.packagePrice,
     required this.packageDetails,
-  });
+  }) : super(key: key);
 
   @override
   _UpiPaymentScreenState createState() => _UpiPaymentScreenState();
@@ -141,7 +141,7 @@ class _UpiPaymentScreenState extends State<UpiPaymentScreen>{
                           ),
                         ),
                         Text(
-                          widget.packagePrice,
+                          'Rs ${widget.packagePrice}',
                           style: const TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -350,14 +350,14 @@ class _UpiPaymentScreenState extends State<UpiPaymentScreen>{
 
                   // If we have data then definitely we will have UpiResponse.
                   // It cannot be null
-                  UpiResponse _upiResponse = snapshot.data!;
+                  UpiResponse upiResponse = snapshot.data!;
 
                   // Data in UpiResponse can be null. Check before printing
-                  String txnId = _upiResponse.transactionId ?? 'N/A';
-                  String resCode = _upiResponse.responseCode ?? 'N/A';
-                  String txnRef = _upiResponse.transactionRefId ?? 'N/A';
-                  String status = _upiResponse.status ?? 'N/A';
-                  String approvalRef = _upiResponse.approvalRefNo ?? 'N/A';
+                  String txnId = upiResponse.transactionId ?? 'N/A';
+                  String resCode = upiResponse.responseCode ?? 'N/A';
+                  String txnRef = upiResponse.transactionRefId ?? 'N/A';
+                  String status = upiResponse.status ?? 'N/A';
+                  String approvalRef = upiResponse.approvalRefNo ?? 'N/A';
                   _checkTxnStatus(status);
 
                   return Padding(

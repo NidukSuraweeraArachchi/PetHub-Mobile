@@ -12,9 +12,9 @@ class AddressScreen extends StatelessWidget {
     required this.packageDetails,
   });
 
-  TextEditingController emailAddressController = TextEditingController();
-  TextEditingController contactNumberController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
+  final TextEditingController emailAddressController = TextEditingController();
+  final TextEditingController contactNumberController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

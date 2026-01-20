@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../authentication/phone.dart';
 
 class UserScreen extends StatelessWidget {
+  const UserScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,13 +134,134 @@ class UserScreen extends StatelessWidget {
                                 fontFamily: 'Courier',
                               ),
                             ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      Container(
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          color: Colors.green.shade50,
+                          border: Border.all(color: Colors.green.shade300, width: 2),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Text(
-                              'Document ID: $uid',
+                              '🛒 Your Purchases & Items',
                               style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.blue.shade700,
-                                fontFamily: 'Courier',
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green.shade900,
                               ),
+                            ),
+                            const SizedBox(height: 15),
+                            StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(uid)
+                                  .collection('purchases')
+                                  .orderBy('createdAt', descending: true)
+                                  .snapshots(),
+                              builder: (context, purchaseSnapshot) {
+                                if (purchaseSnapshot.connectionState == ConnectionState.waiting) {
+                                  return const CircularProgressIndicator();
+                                }
+
+                                if (!purchaseSnapshot.hasData || purchaseSnapshot.data!.docs.isEmpty) {
+                                  return Text(
+                                    'No purchases yet',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.green.shade700,
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  );
+                                }
+
+                                final purchases = purchaseSnapshot.data!.docs;
+
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: purchases.length,
+                                  itemBuilder: (context, index) {
+                                    final purchase = purchases[index].data() as Map<String, dynamic>;
+                                    final itemName = purchase['itemName'] ?? 'Unknown Item';
+                                    final category = purchase['category'] ?? 'N/A';
+                                    final price = purchase['price'] ?? '0';
+                                    final quantity = purchase['quantity'] ?? 1;
+                                    final date = purchase['createdAt'] != null 
+                                        ? (purchase['createdAt'] as Timestamp).toDate().toString().split(' ')[0]
+                                        : 'N/A';
+
+                                    return Container(
+                                      margin: const EdgeInsets.only(bottom: 10),
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(color: Colors.green.shade200),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            itemName,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'Category: $category',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.grey.shade700,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Qty: $quantity',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.grey.shade700,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'Price: Rs $price',
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.green.shade700,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Date: $date',
+                                                style: TextStyle(
+                                                  fontSize: 11,
+                                                  color: Colors.grey.shade600,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -179,6 +301,8 @@ class UserScreen extends StatelessWidget {
                               onPressed: () async {
                                 await FirebaseAuth.instance.signOut();
                                 Navigator.pop(context);
+                                // Navigate to login screen after logout
+                                Navigator.pushReplacementNamed(context, 'login');
                               },
                               child: const Text('Log Out'),
                             ),

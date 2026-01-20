@@ -134,7 +134,10 @@ class ProductDetailScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => UpiPaymentScreen(
-                          productPrice: productPrice,
+                          order: 0,
+                          packageName: 'Medicine',
+                          packagePrice: productPrice.toString(),
+                          packageDetails: '',
                         ),
                       ),
                     );

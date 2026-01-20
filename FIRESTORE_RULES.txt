@@ -24,6 +24,21 @@ service cloud.firestore {
       
       // Allow DELETE their own document
       allow delete: if request.auth.uid == userId;
+      
+      // ==================== PURCHASES SUBCOLLECTION ====================
+      // Allow users to READ, CREATE, UPDATE, DELETE their own purchases
+      match /purchases/{purchaseId} {
+        allow read: if request.auth.uid == userId;
+        allow create: if request.auth.uid == userId && 
+                         request.auth.uid != null &&
+                         request.resource.data.itemName is string &&
+                         request.resource.data.category is string &&
+                         request.resource.data.price is string &&
+                         request.resource.data.quantity is number;
+        allow update: if request.auth.uid == userId &&
+                         request.auth.uid != null;
+        allow delete: if request.auth.uid == userId;
+      }
     }
     
     // ==================== ORDERS COLLECTION ====================
@@ -45,6 +60,15 @@ service cloud.firestore {
       // Allow DELETE own orders
       allow delete: if request.auth.uid == resource.data.userId &&
                        request.auth.uid != null;
+    }
+    
+    // ==================== PRODUCTS COLLECTION ====================
+    match /products/{productId} {
+      // Allow ALL users to READ products
+      allow read: if true;
+      
+      // Only allow admin writes
+      allow write: if request.auth.token.admin == true;
     }
     
     // ==================== DENY ALL OTHERS ====================
