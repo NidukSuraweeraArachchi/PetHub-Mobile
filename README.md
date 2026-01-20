@@ -1,76 +1,70 @@
-# Flutter Pet Care App
+# PetHub-Mobile
 
-Welcome to the **Flutter Pet Care App** GitHub repository! This project is a mobile application built with Flutter, aimed at providing pet owners with a platform to purchase pet products, book daycare services, and access helpful pet care tips through YouTube videos.
+PetHub-Mobile is a Flutter mobile application for pet owners to browse and buy pet products, book daycare services, and view pet-care videos.
 
-## Features
+## Overview
 
-- **Product Marketplace**: Browse and purchase a variety of pet products, from food and toys to grooming supplies and accessories.
-- **Pet Daycare Booking**: Book daycare services for your pets, with options to select specific times and services.
-- **Pet Care Tips**: Access a collection of YouTube videos offering tips and advice on pet care, including grooming, training, and health.
+- **Product Marketplace**: Browse and purchase food, toys, grooming supplies, clothes, and accessories.
+- **Daycare & Services Booking**: Book daycare and service slots for pets with selectable options.
+- **Pet Care Tips**: Watch curated YouTube videos and tutorials for grooming, training, and pet health.
 
-## Getting Started
+## Repository
 
-### Prerequisites
+Clone the repository:
 
-To run this project locally, ensure you have the following installed:
+```bash
+git clone https://github.com/NidukSuraweeraArachchi/PetHub-Mobile.git
+cd PetHub-Mobile
+git checkout mobile-v2
+```
 
-- [Flutter SDK](https://flutter.dev/docs/get-started/install)
-- [Dart SDK](https://dart.dev/get-dart)
-- An IDE or text editor (e.g., [Android Studio](https://developer.android.com/studio) or [Visual Studio Code](https://code.visualstudio.com/))
+## Prerequisites
 
-### Installation
+- Flutter SDK (see https://flutter.dev/docs/get-started/install)
+- An editor (VS Code or Android Studio)
+- Android/iOS toolchains configured for device/emulator
 
-1. Clone the repository to your local machine:
+## Install & Run
 
-   ```bash
-   git clone https://github.com/Yash-Gupta001/flutter-pet-care-app.git
-   cd flutter-pet-care-app
-   ```
+```bash
+flutter pub get
+flutter run
+```
 
-2. Install the required Flutter packages:
+For platform-specific runs (Android/iOS), open the respective platform project in Android Studio or Xcode.
 
-   ```bash
-   flutter pub get
-   ```
+## Project Structure (high level)
 
-3. Launch the app on an emulator or a physical device:
+- `lib/` — app source code
+  - `authentication/` — login, phone, verification screens
+  - `1_home_screens/` — home categories and content
+  - `2_bottom_nav_screens/` — main tabs (home, product, package, user, etc.)
+  - `navigation/` — maps and route-related UI
+  - `main.dart` — app entrypoint
+- `assets/` — images and static resources
+- `android/`, `ios/`, `macos/`, `linux/`, `windows/`, `web/` — platform projects
+- `test/` — widget and unit tests
 
-   ```bash
-   flutter run
-   ```
+## Notable Files
 
-## Project Structure
-
-- `lib/`: Contains the main Flutter codebase.
-  - `models/`: Data models used in the app.
-  - `screens/`: UI screens for various features.
-  - `widgets/`: Custom widgets used throughout the app.
-- `assets/`: Contains images, videos, and other static assets.
-- `test/`: Unit and widget tests for the app.
+- `lib/main.dart` — app startup and dependency initialization
+- `lib/firebase_options.dart` — Firebase configuration (auto-generated)
+- `assets/` — ships product and UI images used by the app
 
 ## Contributing
 
-We welcome contributions! To contribute to this project, please follow these steps:
+Contributions are welcome. Typical workflow:
 
-1. Fork the repository.
-2. Create a new branch for your feature or bugfix.
-3. Implement your changes and commit them.
-4. Push to your branch and open a Pull Request.
+1. Fork the repo and create a branch.
+2. Make changes and add tests where appropriate.
+3. Open a pull request with a clear description of your changes.
 
-Before submitting a Pull Request, please ensure:
-
-- Your code is well-documented.
-- You've added any necessary tests.
-- Your code follows the project's coding style.
+Please ensure code follows existing style and include small, focused commits.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). Feel free to use and modify the code for your own projects.
+This project uses the MIT License. See the `LICENSE` file for details.
 
 ## Contact
 
-For questions or support, please open an issue in the repository or contact the project maintainers directly.
-
-## Acknowledgments
-
-We appreciate the support of the Flutter community and all contributors to this project. Thank you for helping make the Flutter Pet Care App a success!
+Open issues in the repository for bugs or feature requests.
